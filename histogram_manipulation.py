@@ -14,7 +14,8 @@ import numpy as np
 
 root = Tk()
 
-################# WCZYTYWANIE OBRAZKA #######################    
+### OPENING A FILE: User chooses an image to manipulate ###    
+
 path= askopenfilename(filetypes=[("Image File",'*.jpg'), ("PNG files", "*.png")])
 im = Image.open(path)
 tkimage = ImageTk.PhotoImage(im)
@@ -22,22 +23,29 @@ myvar=Label(root,image = tkimage)
 myvar.image = tkimage
 myvar.pack()
 
+# Chosen image saved in img1 variable
 img1 = Image.open(path)
-############################################################    
+  
     
     
     
 
-################# FUNKCJE PRZEKSZTAŁCAJĄCE ###################
+### MANIPULATION OF AN IMAGE: image processes algorithms
 
-####### LOGARYTM ########
+### Logarithm function
     
-def logarytm():
-    obraz_poprawiony = logPoprawienie(img1)
-    obraz_poprawiony.save("obraz_poprawiony_log.jpg")
+def logarithm():
+    """ Function that starts when user chooses to manipulate image with logarithmic function. 
+    Starts manipulation function and saves corrected image to a file """
+    
+    imgManipulated = logManipulation(img1)
+    imgManipulated.save("imgManipulatedLog.jpg")
     
     
-def logPoprawienie(img):
+def logManipulation(img):
+    """ Implementation of logarithm manipulation. Takes an original image as an argument 
+    and returns manipulated image """
+    
     #getting the shape of an image
     height, width = img.size
     
@@ -59,18 +67,24 @@ def logPoprawienie(img):
     #returning changed image
     return img  
 
-################################# 
 
 
-####### POTĘGA ########
 
-def potega():
+### Exponential function
+
+def exponential():
+    """ Function that starts when user chooses to manipulate image with logarithmic function. 
+    Starts manipulation function and saves corrected image to a file """
+    
     gamma = float(e1.get())
-    obraz_poprawiony = potegaPoprawienie(img1, gamma)
-    obraz_poprawiony.save("obraz_poprawiony_pot.jpg")
+    imgManipulated = expManipulation(img1, gamma)
+    imgManipulated.save("imgManipulatedExp.jpg")
 
     
-def potegaPoprawienie(img, gamma):
+def expManipulation(img, gamma):
+    """ Implementation of exponential manipulation. Takes an original image as an argument 
+    and returns manipulated image """
+    
     #getting the shape of an image
     height, width = img.size
     
@@ -92,18 +106,26 @@ def potegaPoprawienie(img, gamma):
     #returning image
     return img
 
-################################# 
 
-def liniowe():
+
+### Manipulation with linear intervals
+
+def linear():
+    """ Function that starts when user chooses to manipulate image with logarithmic function. 
+    Starts manipulation function and saves corrected image to a file """
+    
     x1 = float(e2.get())
     y1 = float(e3.get())
     x2 = float(e4.get())
     y2 = float(e5.get())
-    obraz_poprawiony_liniowe = przedzialami_liniowymi(img1, x1, y1, x2, y2)
-    obraz_poprawiony_liniowe.save("obraz_poprawiony_lin.jpg")
+    imgManipulated = linearManipulation(img1, x1, y1, x2, y2)
+    imgManipulated.save("imgManipulatedLin.jpg")
 
     
-def przedzialami_liniowymi(img, x1, y1, x2, y2):
+def linearManipulation(img, x1, y1, x2, y2):
+    """ Implementation of exponential manipulation. Takes an original image as an argument 
+    and returns manipulated image """
+        
     #getting the shape of an image
     height, width = img.size
     
@@ -150,38 +172,39 @@ def przedzialami_liniowymi(img, x1, y1, x2, y2):
 
 
     
-################ WYBÓR PRZEKSZTAŁCENIA #####################    
+### CHOICE OF AN IMAGE PROCESSING ALGORITHM - GUI
+
 master = tk.Tk()
-master.title("Poprawa obrazu według równania")
+master.title("Image processing")
 
 tk.Label(master,
-         text="Wybierz przekształcenie:").grid(row=0)
+         text="Choose the manipulation:").grid(row=0)
 
 
-#### LOGARYTMICZNE ####
+#### LOGARITHMIC ####
 tk.Label(master,
-         text="Przekształcenie logarytmiczne").grid(row=1, column = 0)
+         text="Logarithmic manipulation").grid(row=1, column = 0)
 tk.Button(master,
-          text='Wygeneruj', command=logarytm).grid(row=1,
+          text='Generate', command=logarithm).grid(row=1,
                                                        column=1,
                                                        sticky=tk.W,
                                                        pady=4)
 #######################
 
 
-#### POTĘGOWE ####
+#### EXPONENTIAL ####
 tk.Label(master,
-         text="Przekształcenie potęgowe, podaj wykładnik: ").grid(row=2, column = 0)
+         text="Exponentail manipulation, set the coefficient: ").grid(row=2, column = 0)
 e1 = tk.Entry(master)
 e1.grid(row=2, column=1)              
 tk.Button(master,
-          text='Wygeneruj', command=potega).grid(row=2, column=3, sticky=tk.W,pady=4)
+          text='Generate', command=exponential).grid(row=2, column=3, sticky=tk.W,pady=4)
 ##################              
 
 
-#### PRZEDZIALAMI LIN. ####
+#### LINEAR INTERVALS ####
 tk.Label(master,
-         text="Przekształcenie przedziałami liniowymi, podaj współrzędne: ").grid(row=3, column = 0)
+         text="Linear intervals, set the coefficients: ").grid(row=3, column = 0)
 
 tk.Label(master,
          text="x1: ").grid(row=4, column = 0)
@@ -205,14 +228,12 @@ e4.grid(row=5, column=1)
 e5.grid(row=5, column=3)
 
 tk.Button(master,
-          text='Wygeneruj', command=liniowe).grid(row=6,
+          text='Generate', command=linear).grid(row=6,
                                                        column=1,
                                                        sticky=tk.W,
                                                        pady=4)
 
 
-
-############################################################
 
 
 
